@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Teams</title>
+</head>
+<body>
+    <h2 class="mb-3">Welcome {{loggedUser.first_name}} {{loggedUser.last_name}}!</h2>
+    <a href="/ideas">Dashboard</a>
+    <a href="/logout">logout</a>
+    <h3 class="mb-3">Join a team!</h3>
+    <select class="form-select" aria-label="Default select example">
+        {% for team in teams %}
+        <option value="{{team.teamName}}">{{team.teamName}}</option>
+        {% endfor %}
+      </select>
+      
+      <button>Join</button>
+      <h3 class="mb-3"> ~OR~</h3>
+      <h3 class="mb-3"> Add a new Team</h3>
+      <h3 class="mb-3"> Name:</h3>
+      <form action="/teams/new" method="post">
+        <label class="mb-3" for="teamName"></label>
+        <input class="mb-3" type="text" name="teamName" id="teamName">
+        {% with messages = get_flashed_messages(category_filter=["team"]) %}
+          {% if messages %}
+              
+              {% for message in messages %}
+              <p class="text-danger text-center">{{ message }}</p>
+              {% endfor %}
+              
+          {% endif %}
+          {% endwith %}
+        <button type="submit">Create</button>
+      </form>
+</body>
+</html>
